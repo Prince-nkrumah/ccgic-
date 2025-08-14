@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Cosmic Christ Glories Incorporated</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;600&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <header class="site-header">
+  <div class="logo"><img src="/assets/logo.png" alt="Church Logo"></div>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#testimonials">Testimonials</a></li>
+      <li><a href="index.html#contacts">Contacts</a></li>
+      <li><a href="events.html" class="register-btn">Register Here</a></li>
+    </ul>
+  </nav>
+  <div class="menu-toggle">&#9776;</div>
+</header>
+
+    <!-- Hero Section -->
+    <section class="events-hero hero">
+        <div class="events-hero-overlay"></div>
+        <div class="container">
+            <div class="events-hero-content">
+                <h1 class="events-hero-title">Join Our Upcoming Events</h1>
+                <h2 class="events-hero-subtitle">Experience spiritual revival and divine encounters with the COSMIC KINGDOM.</h2>
+                <a href="#events" class="btn btn-primary">Book a Ticket</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="events">
+        <div class="container">
+            <h2 class="section-title">Upcoming Events</h2>
+            <div class="events-grid">
+                <div class="event-card" data-event-id="123">
+                    <div class="event-image">
+                    </div>
+                    <div class="event-content">
+                        <h3 class="event-title"></h3>
+                        <div class="event-meta">
+                            <span class="event-date"><i class="far fa-calendar-alt"></i></span>
+                            <span class="event-time"><i class="far fa-clock"></i></span>
+                        </div>
+                        <p class="event-desc"></p>
+                        <button class="btn btn-primary book-ticket">Book a Ticket</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+    <div class="modal-container">
+        <button class="close-modal">&times;</button>
+        <h2 class="modal-title">Book Your Ticket</h2>
+        <form id="booking-form" class="modal-form">
+            <div class="form-group">
+                <input type="text" id="booking-name" name="name" required>
+                <label for="booking-name">Full Name</label>
+            </div>
+            <div class="form-group">
+                <input type="tel" id="booking-phone" name="phone" required>
+                <label for="booking-phone">Phone Number</label>
+            </div>
+            <div class="form-group">
+                <input type="text" id="booking-location" name="location" required>
+                <label for="booking-location">Location</label>
+            </div>
+            <div class="form-group">
+                <input type="email" id="booking-email" name="email" required>
+                <label for="booking-email">Email</label>
+            </div>
+            <div class="form-group">
+                <input type="number" id="booking-guests" name="guests" min="1" max="20" value="1" required>
+                <label for="booking-guests">Number of Invited Guests</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Book Now</button>
+         
+            <!-- Spinner (Hidden by Default) -->
+<div id="booking-loader" class="loader-overlay" style="display: none;">
+  <div class="loader"></div>
+</div>
+
+        </form>
+    </div>
+</div>
+    </div>
+
+        <!-- Success Toast (Hidden by Default) -->
+<div id="success-toast" class="toast">
+  Booking successful! 🎉
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="/assets/logo.png" alt="Church Logo">
+      </div>
+      <nav class="footer-nav">
+        <a href="index.html#about">About</a>
+        <a href="index.html#services">Services</a>
+        <a href="index.html#testimonials">Testimonials</a>
+        <a href="index.html#contacts">Contacts</a>
+        <a href="events.html">Register Here</a>
+      </nav>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> All Rights Reserved, COSMIC CHRIST GLORIES INCORPORATED</p>
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP BUTTON -->
+<a href="#" class="back-to-top">
+  <i class="fas fa-arrow-up"></i>
+</a>
+
+    <script src="js/modals.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
