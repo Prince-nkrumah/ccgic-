@@ -2,34 +2,36 @@ document.addEventListener('DOMContentLoaded', function() {
     // DOM Elements
     const eventsGrid = document.querySelector('.events-grid');
     const modalOverlay = document.getElementById('modal');
-    const closeModalBtn = document.querySelector('.close-modal'); // ✅ new name
+    const closeModalBtn = document.querySelector('.close-modal'); 
     const bookingForm = document.getElementById('booking-form');
-    
-    // Current event being booked (set when Book Now is clicked)
+
     let currentEventId = null;
+
+    // Determine backend base URL (local vs deployed)
+    const BASE_URL = window.location.hostname === 'localhost'
+        ? 'http://localhost:5000'
+        : 'https://cosmic-church.onrender.com';
 
     // Fetch events from backend
     async function fetchEvents() {
         eventsGrid.innerHTML = '<div class="loading">Loading events...</div>';
         try {
-            // Replace with your actual backend endpoint
-            const response = await fetch('https://cosmic-church.onrender.com/api/events');
-            if (!response.ok) {
-                throw new Error('Failed to fetch events');
-            }
+            const response = await fetch(`${BASE_URL}/api/events`);
+            if (!response.ok) throw new Error('Failed to fetch events');
             const result = await response.json();
-            displayEvents(result.data);
 
+            // Log the full event objects
+            console.log('Fetched events:', result.data);
+
+            displayEvents(result.data);
         } catch (error) {
             console.error('Error fetching events:', error);
-            // Display error message to user
             eventsGrid.innerHTML = '<p class="error-message">Failed to load events. Please try again later.</p>';
         }
     }
 
     // Display events in the grid
     function displayEvents(events) {
-        // Clear existing events
         eventsGrid.innerHTML = '';
 
         if (!events || events.length === 0) {
@@ -42,21 +44,17 @@ document.addEventListener('DOMContentLoaded', function() {
             eventCard.className = 'event-card';
             eventCard.dataset.eventId = event.id;
 
-            // Format date and time for display
             const eventDate = new Date(event.date);
-            const formattedDate = eventDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            const formattedTime = eventDate.toLocaleTimeString('en-US', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-            
-            const imageUrl = event.imageUrl ?
-                `https://cosmic-church.onrender.com/${event.imageUrl.replace(/^public[\\/]/, '').replace(/\\/g, '/')}`:
-                'https://via.placeholder.com/400x250?text=Event+Image';
+            const formattedDate = eventDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            const formattedTime = eventDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+            // Generate image URL
+            const imageUrl = event.imageUrl
+                ? `${BASE_URL}/${event.imageUrl.replace(/^public[\\/]/, '').replace(/\\/g, '/')}`
+                : 'https://via.placeholder.com/400x250?text=Event+Image';
+
+            // Log each image URL
+            console.log('Image URL for event:', imageUrl);
 
             eventCard.innerHTML = `
                 <div class="event-image">
@@ -76,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventsGrid.appendChild(eventCard);
         });
 
-        // Add event listeners to all Book Now buttons
+        // Event listeners for Book Now buttons
         document.querySelectorAll('.book-ticket').forEach(button => {
             button.addEventListener('click', function() {
                 const eventCard = this.closest('.event-card');
@@ -93,77 +91,58 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function closeModal() {
-    modalOverlay.classList.remove('active');
-    document.body.style.overflow = 'auto';
-    currentEventId = null;
-}
-
-
-    // Event listeners for modal
-   closeModalBtn.addEventListener('click', closeModal); // ✅ use the renamed variable
-modalOverlay.addEventListener('click', function (e) {
-    if (e.target === modalOverlay) {
-        closeModal();
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        currentEventId = null;
     }
-});
 
-
-    // Handle form submission
-    bookingForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  // Show loader
-  document.getElementById('booking-loader').style.display = 'flex';
-
-  const formData = {
-    eventId: currentEventId,
-    attendee: {
-      name: document.getElementById('booking-name').value,
-      phone: document.getElementById('booking-phone').value,
-      location: document.getElementById('booking-location').value,
-      email: document.getElementById('booking-email').value,
-    },
-    totalTickets: document.getElementById('booking-guests').value
-  };
-
-//   https://cosmic-church.onrender.com
-
-  try {
-    const res = await fetch('https://cosmic-church.onrender.com/api/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+    closeModalBtn.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', function(e) {
+        if (e.target === modalOverlay) closeModal();
     });
 
-    const data = await res.json();
+    // Booking form submission
+    bookingForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        document.getElementById('booking-loader').style.display = 'flex';
 
-    // Hide loader
-    document.getElementById('booking-loader').style.display = 'none';
+        const formData = {
+            eventId: currentEventId,
+            attendee: {
+                name: document.getElementById('booking-name').value,
+                phone: document.getElementById('booking-phone').value,
+                location: document.getElementById('booking-location').value,
+                email: document.getElementById('booking-email').value,
+            },
+            totalTickets: document.getElementById('booking-guests').value
+        };
 
-    if (res.ok && data.success) {
-  // Show toast
-  const toast = document.getElementById('success-toast');
-  toast.classList.add('show');
-  setTimeout(() => {
-    toast.classList.remove('show');
-  }, 4000);
+        try {
+            const res = await fetch(`${BASE_URL}/api/bookings`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
 
-  // Reset form and close modal
-  e.target.reset();
-  closeModal();
-}
-else {
-      alert('Booking failed: ' + (data.error || 'Please try again.'));
-    }
+            const data = await res.json();
+            document.getElementById('booking-loader').style.display = 'none';
 
-  } catch (error) {
-    console.error('Booking error:', error);
-    alert('An error occurred. Please try again.');
-    document.getElementById('booking-loader').style.display = 'none';
-  }
-});
+            if (res.ok && data.success) {
+                const toast = document.getElementById('success-toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 4000);
+                e.target.reset();
+                closeModal();
+            } else {
+                alert('Booking failed: ' + (data.error || 'Please try again.'));
+            }
+        } catch (error) {
+            console.error('Booking error:', error);
+            alert('An error occurred. Please try again.');
+            document.getElementById('booking-loader').style.display = 'none';
+        }
+    });
 
-
-    // Initialize the page
+    // Initialize page
     fetchEvents();
 });
