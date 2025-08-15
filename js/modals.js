@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         eventsGrid.innerHTML = '<div class="loading">Loading events...</div>';
         try {
             // Replace with your actual backend endpoint
-            const response = await fetch('https://church-backend-eez4.onrender.com/api/events');
+            const response = await fetch('https://cosmic-church.onrender.com/api/events');
             if (!response.ok) {
                 throw new Error('Failed to fetch events');
             }
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             
             const imageUrl = event.imageUrl ?
-                `https://church-backend-eez4.onrender.com/${event.imageUrl.replace(/^public[\\/]/, '').replace(/\\/g, '/')}`:
+                `https://cosmic-church.onrender.com/${event.imageUrl.replace(/^public[\\/]/, '').replace(/\\/g, '/')}`:
                 'https://via.placeholder.com/400x250?text=Event+Image';
 
             eventCard.innerHTML = `
@@ -126,10 +126,10 @@ modalOverlay.addEventListener('click', function (e) {
     totalTickets: document.getElementById('booking-guests').value
   };
 
-//   https://church-backend-eez4.onrender.com
+//   https://cosmic-church.onrender.com
 
   try {
-    const res = await fetch('https://church-backend-eez4.onrender.com/api/bookings', {
+    const res = await fetch('https://cosmic-church.onrender.com/api/bookings', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
