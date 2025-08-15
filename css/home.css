@@ -1067,14 +1067,14 @@ a.register-btn:hover {
     outline: none;
 }
 
-.logo,
+.site-header,
 .chu,
 .register-btn,
 .btn-primary,
 .btn-outline,
 .card-link,
 .menu-toggle,
-.fa-chevron-down,
+.scroll-down,
 .social-links,
 .back-to-top {
   -webkit-tap-highlight-color: transparent;
