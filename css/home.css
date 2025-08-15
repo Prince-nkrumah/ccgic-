@@ -1049,6 +1049,27 @@ a.register-btn:hover {
     flex-direction: column;
     gap: 20px;
 }
+
+/* buttons active none*/
+.logo:focus,
+.chu:focus,
+.register-btn:focus,
+.btn-primary:focus,
+.btn-outline:focus,
+.card-link:focus,
+.menu-toggle:focus,
+.fa-chevron-down:focus,
+.fa-facebook-f:focus,
+.fa-twitter:focus,
+.fa-instagram:focus,
+.fa-youtube:focus,
+.fa-arrow-up:focus {
+   outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+
 /* Additional form group styling */
 .modal-form .form-group {
     margin-bottom: 20px;
