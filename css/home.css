@@ -1075,11 +1075,8 @@ a.register-btn:hover {
 .card-link,
 .menu-toggle,
 .fa-chevron-down,
-.fa-facebook-f,
-.fa-twitter,
-.fa-instagram,
-.fa-youtube,
-.fa-arrow-up {
+.social-links,
+.back-to-top {
   -webkit-tap-highlight-color: transparent;
 }
 
