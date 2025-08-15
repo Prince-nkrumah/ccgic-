@@ -1064,8 +1064,25 @@ a.register-btn:hover {
 .fa-instagram:focus:not(:focus-visible),
 .fa-youtube:focus:not(:focus-visible),
 .fa-arrow-up:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.logo,
+.chu,
+.register-btn,
+.btn-primary,
+.btn-outline,
+.card-link,
+.menu-toggle,
+.fa-chevron-down,
+.fa-facebook-f,
+.fa-twitter,
+.fa-instagram,
+.fa-youtube,
+.fa-arrow-up {
   -webkit-tap-highlight-color: transparent;
 }
+
 
 
 
