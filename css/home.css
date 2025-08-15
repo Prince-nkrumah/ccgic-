@@ -1051,20 +1051,19 @@ a.register-btn:hover {
 }
 
 /* buttons active none*/
-.logo:focus,
-.chu:focus,
-.register-btn:focus,
-.btn-primary:focus,
-.btn-outline:focus,
-.card-link:focus,
-.menu-toggle:focus,
-.fa-chevron-down:focus,
-.fa-facebook-f:focus,
-.fa-twitter:focus,
-.fa-instagram:focus,
-.fa-youtube:focus,
-.fa-arrow-up:focus {
-   outline: none;
+.logo:focus:not(:focus-visible),
+.chu:focus:not(:focus-visible),
+.register-btn:focus:not(:focus-visible),
+.btn-primary:focus:not(:focus-visible),
+.btn-outline:focus:not(:focus-visible),
+.card-link:focus:not(:focus-visible),
+.menu-toggle:focus:not(:focus-visible),
+.fa-chevron-down:focus:not(:focus-visible),
+.fa-facebook-f:focus:not(:focus-visible),
+.fa-twitter:focus:not(:focus-visible),
+.fa-instagram:focus:not(:focus-visible),
+.fa-youtube:focus:not(:focus-visible),
+.fa-arrow-up:focus:not(:focus-visible) {
   -webkit-tap-highlight-color: transparent;
 }
 
