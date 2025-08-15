@@ -30,59 +30,69 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Display events in the grid
-    function displayEvents(events) {
-        eventsGrid.innerHTML = '';
+   // Display events in the grid
+function displayEvents(events) {
+    eventsGrid.innerHTML = '';
 
-        if (!events || events.length === 0) {
-            eventsGrid.innerHTML = '<p class="no-events">No upcoming events at this time. Please check back later.</p>';
-            return;
-        }
-
-        events.forEach(event => {
-            const eventCard = document.createElement('div');
-            eventCard.className = 'event-card';
-            eventCard.dataset.eventId = event.id;
-
-            const eventDate = new Date(event.date);
-            const formattedDate = eventDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-            const formattedTime = eventDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-
-            // Generate image URL
-            const imageUrl = event.imageUrl
-                ? `${BASE_URL}/${event.imageUrl.replace(/^public[\\/]/, '').replace(/\\/g, '/')}`
-                : 'https://via.placeholder.com/400x250?text=Event+Image';
-
-            // Log each image URL
-            console.log('Image URL for event:', imageUrl);
-
-            eventCard.innerHTML = `
-                <div class="event-image">
-                    <img src="${imageUrl}" alt="${event.title}">
-                </div>
-                <div class="event-content">
-                    <h3 class="event-title">${event.title}</h3>
-                    <div class="event-meta">
-                        <span class="event-date"><i class="far fa-calendar-alt"></i> ${formattedDate}</span>
-                        <span class="event-time"><i class="far fa-clock"></i> ${formattedTime}</span>
-                    </div>
-                    <p class="event-desc">${event.description}</p>
-                    <button class="btn btn-primary book-ticket">Book a Ticket</button>
-                </div>
-            `;
-
-            eventsGrid.appendChild(eventCard);
-        });
-
-        // Event listeners for Book Now buttons
-        document.querySelectorAll('.book-ticket').forEach(button => {
-            button.addEventListener('click', function() {
-                const eventCard = this.closest('.event-card');
-                currentEventId = eventCard.dataset.eventId;
-                openModal();
-            });
-        });
+    if (!events || events.length === 0) {
+        eventsGrid.innerHTML = '<p class="no-events">No upcoming events at this time. Please check back later.</p>';
+        return;
     }
+
+    events.forEach(event => {
+        const eventCard = document.createElement('div');
+        eventCard.className = 'event-card';
+        eventCard.dataset.eventId = event.id;
+
+        // Force Ghana time zone
+        const eventDate = new Date(event.date);
+        const formattedDate = eventDate.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            timeZone: 'Africa/Accra' 
+        });
+        const formattedTime = eventDate.toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            timeZone: 'Africa/Accra' 
+        });
+
+        // Generate image URL
+        const imageUrl = event.imageUrl
+            ? `${BASE_URL}/${event.imageUrl.replace(/^public[\\/]/, '').replace(/\\/g, '/')}`
+            : 'https://via.placeholder.com/400x250?text=Event+Image';
+
+        // Log each image URL
+        console.log('Image URL for event:', imageUrl);
+
+        eventCard.innerHTML = `
+            <div class="event-image">
+                <img src="${imageUrl}" alt="${event.title}">
+            </div>
+            <div class="event-content">
+                <h3 class="event-title">${event.title}</h3>
+                <div class="event-meta">
+                    <span class="event-date"><i class="far fa-calendar-alt"></i> ${formattedDate}</span>
+                    <span class="event-time"><i class="far fa-clock"></i> ${formattedTime}</span>
+                </div>
+                <p class="event-desc">${event.description}</p>
+                <button class="btn btn-primary book-ticket">Book a Ticket</button>
+            </div>
+        `;
+
+        eventsGrid.appendChild(eventCard);
+    });
+
+    // Event listeners for Book Now buttons
+    document.querySelectorAll('.book-ticket').forEach(button => {
+        button.addEventListener('click', function() {
+            const eventCard = this.closest('.event-card');
+            currentEventId = eventCard.dataset.eventId;
+            openModal();
+        });
+    });
+}
 
     // Modal functions
     function openModal() {
